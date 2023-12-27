@@ -145,7 +145,7 @@ function getBook(id) {
 
 //Destruct object examples
 
-const book = getBook(2);
+const book = getBook(3);
 
 console.log(book);
 
@@ -166,7 +166,15 @@ const newGenres = [...genres, "Epic Fantasy"];
 
 console.log(newGenres);
 
-const updatedBook = { book, moviePublicationDate: "2021-12-29" };
+const updatedBook = {
+  ...book,
+  //New property
+  moviePublicationDate: "2021-12-29",
+  //Overwriting property
+  pages: 1210,
+};
+
+console.log(updatedBook);
 
 const allBooks = getBooks();
 
@@ -199,6 +207,8 @@ console.log(bookList.find((x) => x.id === 2));
 //   .then((json) => console.log(json))
 //   .catch((e) => console.log("Error : ", e));
 
+//Promise API Example
+
 function fetchProducts() {
   return fetch("https://dummyjson.com/products/1")
     .then((response) => {
@@ -219,3 +229,83 @@ fetchProducts()
   .catch((error) => {
     console.error("Error handling API response:", error);
   });
+
+const summary = `${title} a, ${pages}-page long book, ${author} was written and published in ${
+  publicationDate.split("-")[0]
+}. The book has ${hasMovieAdaptation ? "" : "not"} been adaptated as a movie.`;
+console.log(summary);
+
+const pagesRange = pages > 1000 ? "Over a thousand" : "less then a thousand";
+
+console.log(pagesRange);
+
+// function getYear(str) {
+//   return str.split("-")[0];
+// }
+const getYear = (str) => {
+  return str.split("-")[0];
+};
+
+console.log(getYear(publicationDate));
+
+console.log(true && "Some string");
+console.log(false && "Some string");
+console.log(hasMovieAdaptation && "This book is a movie");
+//falsy values: 0, '', null, undefined
+console.log("jonas" && "Some string");
+console.log(0 && "Some string");
+console.log(true || "Some string");
+console.log(false || "Some string");
+console.log(book.translations.spanish);
+console.log(book.translations.spanish || "Not Translated");
+console.log(book.reviews.librarything?.reviewsCount);
+const countWrong = book.reviews.librarything?.reviewsCount || "No data";
+console.log(countWrong);
+const count = book.reviews.librarything?.reviewsCount ?? "No data";
+console.log(count);
+
+function getTotalReviewCount(book) {
+  const goodreads = book.reviews?.goodreads?.reviewsCount;
+  const librarything = book.reviews?.librarything?.reviewsCount ?? 0;
+  return goodreads + librarything;
+}
+
+console.log(getTotalReviewCount(book));
+
+const totalPages = allBooks.reduce((sum, book) => sum + book.pages, 0);
+console.log(totalPages);
+
+const arr = [3, 2, 1, 7, 8, 9];
+const sorted = arr.slice().sort((a, b) => a - b);
+const sortedDesc = arr.slice().sort((a, b) => b - a);
+console.log(sorted);
+console.log(sortedDesc);
+const sortedByPages = allBooks.slice().sort((a, b) => a.pages - b.pages);
+console.log(sortedByPages);
+
+// 1) Add a book object to array
+const newBook = { id: 6, title: "Demo", author: "Test" };
+const booksAfterAdding = [...allBooks, newBook];
+console.log(booksAfterAdding);
+
+// 2) Delete a book object to array
+const bookAfterDeleting = booksAfterAdding.filter((x) => x.id !== 3);
+console.log(bookAfterDeleting);
+
+// 3) Update a book object to array
+const bookAfterUpdate = bookAfterDeleting.map((x) =>
+  x.id === 1 ? { ...x, pages: 1222 } : x
+);
+console.log(bookAfterUpdate);
+
+async function getTodos() {
+  const res = await fetch("https://jsonplaceholder.typicode.com/todos");
+  const data = await res.json();
+  console.log(data);
+  return data;
+}
+
+const todos = getTodos();
+console.log(todos);
+
+console.log("Await sonrası çalıştı.");
