@@ -1,16 +1,15 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import myExportedData from "./myExportedData";
+import "./index.css";
 function App() {
   const name = "Bidibidi";
   return (
-    <div>
-      <h1>Hello react !</h1>
-      <p>
-        This is first react <code>paragraph for {name}.</code>
-      </p>
-      <Pizza />
-      <FilterExportedData />
+    <div className="container">
+      <Header />
+      <Menu />
+      <Footer />
+      {/* <FilterExportedData /> */}
     </div>
   );
 }
@@ -19,10 +18,41 @@ function Pizza() {
   return (
     <div>
       <img src="pizzas/spinaci.jpg" alt="Pizza Spinacci" />
-      <h2>Pizza Spinacci</h2>
+      <h3>Pizza Spinacci</h3>
       <p>Tomato, mozarella, bidibidi.....</p>
     </div>
   );
+}
+
+function Header() {
+  return (
+    <header className="header">
+      <h1>Fast react pizza co.</h1>
+    </header>
+  );
+}
+function Menu() {
+  return (
+    <main className="menu">
+      <h2>Our menu's</h2>
+      <Pizza />
+      <Pizza />
+      <Pizza />
+    </main>
+  );
+}
+
+function Footer() {
+  //   return React.createElement("footer", null, "We're currently online.");
+  const date = new Date().toLocaleTimeString();
+  const hour = new Date().getHours();
+  const openedHour = 12;
+  const closedHour = 22;
+  const isOpened = hour >= openedHour && hour <= closedHour;
+  console.log(
+    isOpened ? "We're currently opened" : "We're currently closed. Sorry!!"
+  );
+  return <footer className="footer">We're currently online. {date}</footer>;
 }
 
 function FilterExportedData() {
